@@ -109,7 +109,7 @@ model = tf.saved_model.load("models/ssd_resnet50_v1_fpn_640x640/saved_model")
 
 A containerized deployment of these trained models is available as a separate MLOps project:
 
-### [Dockerized Wildlife Detection API](link-to-your-repo)
+### [Dockerized Wildlife Detection API](https://github.com/amirosseinz/object-detection-comparison)
 
 **Features**:
 - REST API for real-time inference
@@ -119,11 +119,11 @@ A containerized deployment of these trained models is available as a separate ML
 
 ```bash
 # Quick start
-docker pull your-username/wildlife-detection-api
-docker run -p 8000:8000 wildlife-detection-api
+docker pull ahakrami98/object-detection-comparison:latest
+docker run -p 80:80 object-detection-comparison:latest
 ```
 
-> *Link to deployment repository: [Coming Soon]*
+> *Link to deployment repository: [https://github.com/amirosseinz/object-detection-comparison]*
 
 ---
 
