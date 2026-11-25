@@ -25,6 +25,15 @@ For a fresh experiment, assign acquisition group IDs before creating augmented c
 python audit_split.py image_manifest.csv
 ```
 
-The audit checks byte-identical images and the supplied group IDs. Near-duplicate images require a separate similarity check.
+The audit checks byte-identical images and the supplied group IDs. To also catch identical decoded images with different compression or metadata, enable the optional pixel check. The audit requires Python 3.11+; pixel checking also requires Pillow and can run independently of the historical TensorFlow training environment.
+
+```bash
+python audit_split.py image_manifest.csv --decoded-pixels
+python -m unittest test_audit_split -v
+```
+
+Pixel identity includes image dimensions and the decoded RGBA grid, preserving transparency. The report records the pixel hash format, Pillow version and any pixel hashes shared across splits. A byte-distinct duplicate PNG fixture fails the pixel audit while two different pixel grids pass. Multi-frame and unreadable files fail with exit code 2; detected split overlap returns 1; a clean audit returns 0.
+
+This check detects exact decoded-pixel matches. Resized, rotated, augmented or lossy-recompressed copies require a similarity check or a shared acquisition group. Tests use generated fixtures. The original camera-trap dataset is still required to assess leakage in the historical experiment.
 
 The [companion serving demo](https://github.com/amirosseinz/object-detection-comparison) uses a separate label map. The pre-processing notebook lists eland as the third species and the serving demo maps class 3 to lion. Treat the historical training AP and serving timings as separate experiments.
